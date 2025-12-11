@@ -36,4 +36,17 @@ app.post("/api/products", async (req, res) => {
   await newProduct.save();
   res.json(newProduct);
 });
+
+// API Xóa
+app.delete('/api/products/:id', async (req, res) => {
+    await Product.findByIdAndDelete(req.params.id);
+    res.json({message: 'Deleted'});
+});
+
+// API Sửa (Ví dụ sửa giá)
+app.put('/api/products/:id', async (req, res) => {
+    await Product.findByIdAndUpdate(req.params.id, req.body);
+    res.json({message: 'Updated'});
+});
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
