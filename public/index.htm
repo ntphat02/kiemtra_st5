@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shop HereWeGo</title>
+    <style>
+      .product {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+        width: 200px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quản Lý Sản Phẩm</h1>
+
+    <div>
+      <input id="pid" placeholder="ID" />
+      <input id="pname" placeholder="Name" />
+      <input id="pprice" placeholder="Price" type="number" />
+      <input id="pimg" placeholder="Image URL" />
+      <button onclick="addProduct()">Thêm Mới</button>
+    </div>
+
+    <div id="list"></div>
+
+    <script>
+      const API = "http://localhost:5000/api/products";
+
+      async function loadProducts() {
+        const res = await fetch(API);
+        const data = await res.json();
+        document.getElementById("list").innerHTML = data
+          .map(
+            (p) => `
+                <div class="product">
+                    <img src="${p.image}" width="100"><br>
+                    <b>${p.name}</b> - ${p.price}$ <br>
+                    <button onclick="deleteProduct('${p._id}')">Xóa</button>
+                    <button onclick="editProduct('${p._id}')">Sửa Giá</button>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      async function addProduct() {
+        const product = {
+          id: document.getElementById("pid").value,
+          name: document.getElementById("pname").value,
+          price: document.getElementById("pprice").value,
+          image: document.getElementById("pimg").value,
+        };
+        await fetch(API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(product),
+        });
+        loadProducts();
+      }
+
+      // Gọi hàm load lần đầu
+      loadProducts();
+    </script>
+  </body>
+</html>
