@@ -23,8 +23,8 @@ const ProductSchema = new mongoose.Schema({
 });
 const Product = mongoose.model("Product", ProductSchema);
 
-const PORT = 8080;
-// API Lấy danh sách
+const PORT = 5000;
+
 app.get("/api/products", async (req, res) => {
   const products = await Product.find();
   res.json(products);
