@@ -27,6 +27,8 @@ const PORT = 5000;
 
 app.get("/api/products", async (req, res) => {
   const products = await Product.find();
+  console.log(products);
+
   res.json(products);
 });
 
@@ -38,15 +40,14 @@ app.post("/api/products", async (req, res) => {
 });
 
 // API Xóa
-app.delete('/api/products/:id', async (req, res) => {
-    await Product.findByIdAndDelete(req.params.id);
-    res.json({message: 'Deleted'});
+app.delete("/api/products/:id", async (req, res) => {
+  await Product.findByIdAndDelete(req.params.id);
+  res.json({ message: "Deleted" });
 });
 
 // API Sửa (Ví dụ sửa giá)
-app.put('/api/products/:id', async (req, res) => {
-    await Product.findByIdAndUpdate(req.params.id, req.body);
-    res.json({message: 'Updated'});
+app.put("/api/products/:id", async (req, res) => {
+  await Product.findByIdAndUpdate(req.params.id, req.body);
+  res.json({ message: "Updated" });
 });
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
