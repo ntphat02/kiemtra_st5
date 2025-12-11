@@ -23,7 +23,7 @@ const ProductSchema = new mongoose.Schema({
 });
 const Product = mongoose.model("Product", ProductSchema);
 
-const PORT = 3000;
+const PORT = 5000;
 // API Lấy danh sách
 app.get("/api/products", async (req, res) => {
   const products = await Product.find();
